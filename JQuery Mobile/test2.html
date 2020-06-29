@@ -1,0 +1,88 @@
+<html>
+	<head> 
+	<meta http-equiv = "Content-Type" content="text/html; charset=utf-8">
+	<meta name = "viewport"
+		content = "width=device-width, initial-scale = 1">
+	<link rel = "stylesheet"
+		href = "https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+		<script src="https://code.jquery.com/jquery-1.11.3.min.js"> </script>
+	<script src = "https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	<title> test </title>
+	</head>
+	<body>
+		<div data-role="page" id = "pageone">
+			<div data-role = "header">
+				1p 입니다.
+			</div>
+			<div data-role = "main" class ="ui-content">
+				<p> hi</p>
+				<p> 내용</p>
+			<a href = "#pagetwo" data-transition= "turn" >go two</a>
+			<a href = "#pagethree"  data-transition = "flow" data-direction="reverse" >go three</a>
+			<a href = "#Map" class="ui-btn" data-transition = "slidedown" data-direction="reverse" >go Map</a>
+			</div>
+			<div data-role = "footer">
+			</div>
+
+		</div>
+
+		<div data-role="page" id = "Map">
+			<div data-role = "header">
+				GoogleMapTest
+			</div>
+			<div data-role = "main" class ="ui-content">
+			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12928.844685401846!2d128.59981137059276!3d35.89284343076651!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3565e17503d6077d%3A0xbfc5020d466ac440!2z64yA6rWs6rSR7Jet7IucIOu2geq1rCDrjIDtlZnroZw!5e0!3m2!1sko!2skr!4v1593412276430!5m2!1sko!2skr" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe><br><br>			
+			<table border= "2">
+				<tr>
+					<th>데이터 키</th><th>데이터 내용</th>
+				</tr>
+				<tr>
+					<th>Key 1</th><th>Data 1 </th>
+				</tr>
+				<tr>
+					<th>Key 2</th><th>Data 2 </th>
+				</tr>
+			 </table><br>
+			<a href = "#pageone" data-transition= "turn" >go one</a>
+			<a href = "#pagetwo" data-transition= "turn" >go two</a>
+			<a href = "#pagethree"  data-transition = "flow" data-direction="reverse" >go three</a>
+			</div>
+			<div data-role = "footer">
+			</div>
+
+		</div>
+
+
+
+		<div data-role="page" data-dialog = "true" id = "pagetwo" >
+			<div data-role = "header" class = "ui-content">
+				&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp2p 입니다.
+			</div>
+			<div data-role = "main" class ="ui-content">
+				<p> bye</p>
+				<p> 내용</p>
+			<a href = "#pageone" data-transition="flow" data-direction = "reverse">go one</a>
+			<a href = "#pagethree">go three</a>
+			</div>
+			<div data-role = "footer">
+			</div>
+		</div>
+
+		<div data-role="page" id = "pagethree" >
+			<div data-role = "header" class = "ui-content">
+				&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp3p 입니다.
+			</div>
+			<div data-role = "main" class ="ui-content">
+				<p> bye</p>
+				<p> 내용</p>
+			<a href = "#pageone" data-transition="reverse">go one</a>
+			<a href = "#pagetwo" data-transition="reverse">go two</a>
+			</div>
+			<div data-role = "footer">
+			</div>
+		</div>
+
+		
+
+	</body>	
+</html>
