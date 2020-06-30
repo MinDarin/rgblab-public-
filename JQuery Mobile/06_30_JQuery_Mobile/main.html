@@ -1,0 +1,95 @@
+<html>
+	<head> 
+	<meta http-equiv = "Content-Type" content="text/html; charset=utf-8">
+	<meta name = "viewport"
+		content = "width=device-width, initial-scale = 1">
+	<link rel = "stylesheet"
+		href = "https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+		<script src="https://code.jquery.com/jquery-1.11.3.min.js"> </script>
+	<script src = "https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	<title> test </title>
+
+	<script>
+		function content_change(url)
+		{
+			var total = url+".html";
+			document.getElementById("main_frame").src = total;
+		}
+		function change_sub1()
+		{
+			sub_m = document.getElementById("sub_menu");
+			sub_m.innerHTML =  " <div  data-role='controlgroup' data-type='horizontal' class='main_menu'>";
+			sub_m.innerHTML += " <button class='sub_button' onclick='content_change(\"map\")'> fp_sub1</button>";
+			sub_m.innerHTML += " <button class='sub_button' onclick='content_change(\"map\")'> fp_sub2</button>";
+			sub_m.innerHTML += " <button class='sub_button' onclick='content_change(\"map\")'> fp_sub3</button>";
+			sub_m.innerHTML += " <button class='sub_button' onclick='content_change(\"map\")'> fp_sub4</button>";
+			sub_m.innerHTML += "</div>";
+		}
+		function change_sub2()
+		{
+			sub_m = document.getElementById("sub_menu");
+			sub_m.innerHTML = " &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <button class='sub_button' onclick='content_change(\"table\")'> Table 1</button>";
+			sub_m.innerHTML += " <button class='sub_button' onclick='content_change(\"table\")'> Table 2</button>";
+			sub_m.innerHTML += " <button class='sub_button' onclick='content_change(\"table\")'> Table 3</button>";
+			sub_m.innerHTML += " <button class='sub_button' onclick='content_change(\"table\")'> Table 4</button>";
+		}
+		function change_sub3()
+		{
+			sub_m = document.getElementById("sub_menu");
+			sub_m.innerHTML = "&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;"
+			sub_m.innerHTML += " <button class='sub_button' onclick='content_change(\"map\")'> Map1</button>";
+			sub_m.innerHTML += " <button class='sub_button' onclick='content_change(\"map\")'> Map2</button>";
+			sub_m.innerHTML += " <button class='sub_button' onclick='content_change(\"map\")'> Map3</button>";
+			sub_m.innerHTML += " <button class='sub_button' onclick='content_change(\"map\")'> Map4</button>";
+		}
+		function change_sub4()
+		{
+			sub_m = document.getElementById("sub_menu");
+			sub_m.innerHTML = "&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;"
+			sub_m.innerHTML += " <button class='sub_button' onclick='content_change(\"map\")'> other1</button>";
+			sub_m.innerHTML += " <button class='sub_button' onclick='content_change(\"map\")'> other2</button>";
+			sub_m.innerHTML += " <button class='sub_button' onclick='content_change(\"map\")'> other3</button>";
+			sub_m.innerHTML += " <button class='sub_button' onclick='content_change(\"map\")'> other4</button>";
+		}
+	</script>
+	<style>
+	.button {
+		background-color: #000000; /* Green */
+		border: none;
+		color: Green;
+		padding: 15px 32px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 16px;
+		width = 100px;
+		height =50px;
+	}
+	</style>
+	</head>
+	<body>
+		
+		<div data-role="page" id = "pageone">
+			<div data-role = "header">
+				<img src ="고양이.jpg" width = "100" height  = "50">
+				<div  data-role="controlgroup" data-type="horizontal" class="main_menu">
+					<button class="button" onmouseover="change_sub1()"> FirstPage</button> 
+					<button class="button" onmouseover="change_sub2()"> Table</button> 
+					<button class="button" onmouseover="change_sub3()"> Map</button> 
+					<button class="button" onmouseover="change_sub4()"> Other</button> 
+				</div>
+				<div width = "100" id = "sub_menu">
+				
+				</div>
+			</div>
+			<div data-role = "main" class ="ui-content">
+			<iframe id="main_frame" width = "1000" height="500">
+				<p> hi</p>
+				<p> 내용</p>
+			</iframe>
+			</div>
+		</div>
+
+
+	</body>	
+</html>
