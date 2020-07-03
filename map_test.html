@@ -1,0 +1,583 @@
+<html class="ui-mobile"><head><base href="http://streaming.arionflight.com/dico/main.html#register-complaint">
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <link rel="stylesheet" href="themes/dico.min.css">
+    <link rel="stylesheet" href="themes/jquery.mobile.icons.min.css">
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=93032488ec19a73382ff7924588594e0&amp;libraries=services,clusterer,drawing"></script><script charset="UTF-8" src="http://t1.daumcdn.net/mapjsapi/js/main/4.2.0/kakao.js"></script><script charset="UTF-8" src="http://s1.daumcdn.net/svc/attach/U03/cssjs/mapapi/libs/1.0.1/1515130215283/services.js"></script><script charset="UTF-8" src="http://s1.daumcdn.net/svc/attach/U03/cssjs/mapapi/libs/1.0.6/1460434272434/clusterer.js"></script><script charset="UTF-8" src="http://t1.daumcdn.net/mapjsapi/js/libs/drawing/1.2.5/drawing.js"></script>
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+
+    <link rel="stylesheet" href="./grt-responsive-menu/grt-responsive-menu.css">
+
+    <script type="text/javascript">
+        var maps = [];
+
+        $('#map-jung').ready(function() {
+            console.log('b')
+            var mapInstance = setMapInstance('map-jung', 35.8661, 128.5930);
+            var map = setMap(mapInstance.container, mapInstance.option);
+            maps.push(map);
+            setComplaintTable(map, 'tbody-jung', '중구');
+        });
+
+        $('#map-dong').ready(function() {
+                            var mapInstance = setMapInstance('map-dong', 35.9340, 128.6854);
+            var map = setMap(mapInstance.container, mapInstance.option);
+            maps.push(map);
+            setComplaintTable(map, 'tbody-dong', '동구');
+                    });
+
+        $('#map-seo').ready(function() {
+                            var mapInstance = setMapInstance('map-seo', 35.8741, 128.5500);
+            var map = setMap(mapInstance.container, mapInstance.option);
+            maps.push(map);
+            setComplaintTable(map, 'tbody-seo', '서구');
+                    });
+
+                    $('#map-nam').ready(function() {
+                            var mapInstance = setMapInstance('map-nam', 35.8348, 128.5858);
+            var map = setMap(mapInstance.container, mapInstance.option);
+            maps.push(map);
+            setComplaintTable(map, 'tbody-nam', '남구');
+                    });
+
+        $('#map-buk').ready(function() {
+                            var mapInstance = setMapInstance('map-buk', 35.9258, 128.5766);
+            var map = setMap(mapInstance.container, mapInstance.option);
+            maps.push(map);
+            setComplaintTable(map, 'tbody-buk', '북구');
+                    });
+
+                    $('#map-suseong').ready(function() {
+                            var mapInstance = setMapInstance('map-suseong', 35.8341, 128.6617);
+            var map = setMap(mapInstance.container, mapInstance.option);
+            maps.push(map);
+            setComplaintTable(map, 'tbody-suseong', '수성구');
+                    });
+
+                    $('#map-dalseo').ready(function() {
+                            var mapInstance = setMapInstance('map-dalseo', 35.8278, 128.5292);
+            var map = setMap(mapInstance.container, mapInstance.option);
+            maps.push(map);
+            setComplaintTable(map, 'tbody-dalseo', '달서구');
+                    });
+
+                    $('#map-dalseong').ready(function() {
+                            var mapInstance = setMapInstance('map-dalseong', 35.7596, 128.4983);
+            var map = setMap(mapInstance.container, mapInstance.option);
+            maps.push(map);
+            setComplaintTable(map, 'tbody-dalseong', '달성군');
+                    });
+        
+        $(document).on('pagebeforecreate', '#view-complaint', function(event, ui) {
+            console.log('a');
+        });
+        
+        $(document).on('pagecreate', '#register-complaint', function(event, ui) {
+            var mapInstance = setMapInstance("map-register-complaint", 35.8661, 128.5930);
+                            registerComplaintMap = setMap(mapInstance.container, mapInstance.option);
+            maps.push(registerComplaintMap);
+                            onClickLocationInMap(registerComplaintMap , registerComplaintMarker, 'address');
+                            registerComplaintMarker.setMap(registerComplaintMap);
+              });
+
+        $(document).on('pagecreate', '#register-pavage', function(event, ui) {
+                            var mapInstance = setMapInstance("map-register-pavage", 35.8661, 128.5930);
+
+                            registerPavageMap = setMap(mapInstance.container, mapInstance.option);
+                            
+            maps.push(registerPavageMap);
+
+            registerPavageMarker.setMap(registerPavageMap);
+            registerPavageMarker.setDraggable(true);
+                    });
+
+        $(document).on('pageshow',  function(event, ui) {
+            for(var key in maps) {
+                var center = maps[key].getCenter();
+                maps[key].relayout();
+                maps[key].setCenter(center);
+            }
+        });
+
+        $(document).on('pagebeforeshow', function(event, ui) {
+            $('#grt-mobile-menu-button-a').removeClass('grt-mobile-button-open');
+                            $('#grt-menu-a').removeClass('open-grt-menu');
+                            $('#grt-mobile-menu-button-b').removeClass('grt-mobile-button-open');
+                            $('#grt-menu-b').removeClass('open-grt-menu');
+                            $('#grt-mobile-menu-button-c').removeClass('grt-mobile-button-open');
+                            $('#grt-menu-c').removeClass('open-grt-menu');
+            $('#grt-mobile-menu-button-d').removeClass('grt-mobile-button-open');
+                            $('#grt-menu-d').removeClass('open-grt-menu');
+
+        });
+
+        $(document).on('pageshow', '#register-pavage',  function(event, ui) {
+            setPavageTable();
+                    });
+
+        $(document).on('pageshow', '#report',  function(event, ui) {
+                            $('#div-date').text(getDate());
+            setReportTable(getDate());
+                    });
+        
+    </script>
+<title>대구시설공단(DICO) - 민원등록</title></head>
+
+<body class="ui-mobile-viewport ui-overlay-a">
+    <div data-role="page" id="view-complaint" data-url="view-complaint" data-title="대구시설공단(DICO) - 민원조회" tabindex="0" class="ui-page ui-page-theme-a" > 
+        <div data-role="header" class="header center ui-header ui-bar-a" data-theme="a" role="banner">
+            <header>
+                <div class="menu-container">
+                    <div class="grt-menu-row">
+                        <div class="grt-menu-logo">
+                            <p class="center align-center grt-logo">
+                                <a href="JavaScript: location.reload(true);" class="ui-link"><img src="./css/images/dico_ci_group.png" width="175" height="25"></a>
+                            </p>
+                        </div>
+                        <div class="grt-menu-right center">
+                            <nav>
+                                <button id="grt-mobile-menu-button-a" class="grt-mobile-button ui-btn ui-shadow ui-corner-all"><span class="line1"></span><span class="line2"></span><span class="line3"></span></button>
+                                <ul id="grt-menu-a" class="grt-menu">
+                                    <li class="active"><span><a href="#view-complaint" class="ui-link">민원조회</a></span></li>
+                                    <li><span><a href="#register-complaint" class="ui-link">민원등록</a></span></li>
+                                    <li><span><a href="#report" class="ui-link">일지확인</a></span></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        </div>
+
+ 
+
+    <!---------------------------------------------------------------------------------------------------------------------------------------->
+
+    <div data-role="page" id="register-complaint" data-url="register-complaint" data-title="대구시설공단(DICO) - 민원등록" tabindex="0" class="ui-page ui-page-theme-a ui-page-active" style="min-height: 959px;">
+                <div data-role="header" class="header center ui-header ui-bar-a" data-theme="a" role="banner">
+                       <header>
+                                <div class="menu-container">
+                                        <div class="grt-menu-row">
+                                                <div class="grt-menu-logo">
+                                                        <p class="center align-center grt-logo">
+                                <a href="/dico/main.html" class="ui-link"><img src="./css/images/dico_ci_group.png" width="175" height="25"></a>
+                                                        </p>
+                                                </div>
+                                                <div class="grt-menu-right center">
+                                                        <nav>
+                                                                <button id="grt-mobile-menu-button-b" class="grt-mobile-button ui-btn ui-shadow ui-corner-all"><span class="line1"></span><span class="line2"></span><span class="line3"></span></button>
+                                                                <ul id="grt-menu-b" class="grt-menu">
+                                    <li><span><a href="#view-complaint" class="ui-link">민원조회</a></span></li>
+                                    <li class="active"><span><a href="#register-complaint" class="ui-link">민원등록</a></span></li>
+                                                                        <li><span><a href="#report" class="ui-link">일지확인</a></span></li>
+                                                                </ul>
+                                                        </nav>
+                                                </div>
+                                        </div>
+                                </div>
+                        </header>
+                </div>
+
+        <div data-role="content" class="pd-rem-10 ui-content" role="main">
+                        <div data-role="collapsible-set" data-collapsed="false" style="height:300px;" class="ui-collapsible-set ui-group-theme-inherit ui-corner-all">
+                                <div id="map-register-complaint" style="width: 100%; height: 100%; position: relative; overflow: hidden; background: url(&quot;http://t1.daumcdn.net/mapjsapi/images/bg_tile.png&quot;);"><div style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; touch-action: none; cursor: url(&quot;http://i1.daumcdn.net/dmaps/apis/cursor/openhand.cur.ico&quot;) 7 5, url(&quot;http://i1.daumcdn.net/dmaps/apis/cursor/openhand.cur.ico&quot;), default;"><div style="position: absolute; left: 396px; top: 246px;"><div style="position: absolute; z-index: 1; left: 0px; top: 0px;"><img src="http://map0.daumcdn.net/map_2d/1912uow/L9/19/20.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -600px; top: -176px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map1.daumcdn.net/map_2d/1912uow/L9/19/21.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -344px; top: -176px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map2.daumcdn.net/map_2d/1912uow/L9/19/22.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -88px; top: -176px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map3.daumcdn.net/map_2d/1912uow/L9/19/23.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 168px; top: -176px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map0.daumcdn.net/map_2d/1912uow/L9/19/24.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 424px; top: -176px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map0.daumcdn.net/map_2d/1912uow/L9/20/20.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -600px; top: -432px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map1.daumcdn.net/map_2d/1912uow/L9/20/21.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -344px; top: -432px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map2.daumcdn.net/map_2d/1912uow/L9/20/22.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -88px; top: -432px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map3.daumcdn.net/map_2d/1912uow/L9/20/23.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 168px; top: -432px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map0.daumcdn.net/map_2d/1912uow/L9/20/24.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 424px; top: -432px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map0.daumcdn.net/map_2d/1912uow/L9/21/20.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -600px; top: -688px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map1.daumcdn.net/map_2d/1912uow/L9/21/21.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -344px; top: -688px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map2.daumcdn.net/map_2d/1912uow/L9/21/22.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -88px; top: -688px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map3.daumcdn.net/map_2d/1912uow/L9/21/23.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 168px; top: -688px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map0.daumcdn.net/map_2d/1912uow/L9/21/24.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 424px; top: -688px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"></div><div style="position: absolute; z-index: 0; left: 0px; top: 0px;"></div><div style="position: absolute; z-index: 1;"></div><div style="position: absolute; z-index: 1; width: 645px; height: 300px;"></div><div style="position: absolute; z-index: 1;"><svg version="1.1" style="stroke: none; stroke-dashoffset: 0.5; stroke-linejoin: round; fill: none; transform: translateZ(0px); position: absolute; left: -1686px; top: -846px; width: 3225px; height: 1500px;" viewBox="0 0 3225 1500"><defs></defs></svg></div><div style="position: absolute; z-index: 1; width: 100%; height: 0px; transform: translateZ(0px);"><div style="position: absolute; margin: -39px 0px 0px -14px; z-index: 0; left: 202px; top: -76px; display: block;"><img draggable="false" src="http://t1.daumcdn.net/mapjsapi/images/marker.png" alt="" title="" style="min-width: 0px; min-height: 0px; max-width: 99999px; max-height: none; border: 0px; display: block; position: absolute; user-select: none; -webkit-user-drag: none; clip: rect(0px, 29px, 42px, 0px); top: 0px; left: 0px; width: 29px; height: 42px;"><img src="http://i1.daumcdn.net/dmaps/apis/transparent.gif" alt="" draggable="false" usemap="#daum.maps.Marker.Area:1" style="min-width: 0px; min-height: 0px; max-width: 99999px; max-height: none; border: 0px; display: block; position: absolute; user-select: none; -webkit-user-drag: none; width: 29px; height: 42px;"><map id="daum.maps.Marker.Area:1" name="daum.maps.Marker.Area:1"><area href="javascript:void(0)" alt="" shape="poly" coords="14,39,9,27,4,21,1,16,1,10,4,4,11,0,18,0,25,4,28,10,28,16,25,21,20,27" title="" style="-webkit-tap-highlight-color: transparent;"></map></div></div></div></div><div style="position: absolute; cursor: default; z-index: 1; margin: 0px 6px; height: 19px; line-height: 14px; left: 0px; bottom: 0px; color: rgb(0, 0, 0);"><div style="color: rgb(0, 0, 0); text-align: center; font-size: 10px; float: left;"><div style="float: left; margin: 2px 3px 0px 4px; height: 6px; transition: width 0.1s ease 0s; border-top: none rgb(0, 0, 0); border-right: 2px solid rgb(0, 0, 0); border-bottom: 2px solid rgb(0, 0, 0); border-left: 2px solid rgb(0, 0, 0); border-image: initial; width: 58px;"></div><div style="float: left; margin: 0px 4px 0px 0px; font-family: AppleSDGothicNeo-Regular, 돋움, dotum, sans-serif; font-weight: bold; color: rgb(0, 0, 0);">4km</div></div><div style="margin: 0px 4px; float: left;"><a target="_blank" href="http://map.kakao.com/" title="Kakao 지도로 보시려면 클릭하세요." style="float: left; width: 32px; height: 10px;"><img src="http://t1.daumcdn.net/mapjsapi/images/m_bi_b.png" alt="Kakao 지도로 이동" style="float: left; width: 32px; height: 10px; border: none;"></a><div style="font: 11px / 11px Arial, Tahoma, Dotum, sans-serif; float: left;"></div></div></div><div style="cursor: auto; position: absolute; z-index: 2; left: 0px; top: 0px;"></div></div>
+                                <div id="inputAddressLayer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
+                                        <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="document.getElementById('inputAddressLayer').style.display='none';" alt="닫기 버튼">
+                                </div>
+                        </div>
+
+                    
+                               <div id="inputAddressLayer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
+                                       <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="this.style.display='none';" alt="닫기 버튼">
+                        </div>
+                            <form>
+                                <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset"><input id="address" type="text" name="address" placeholder="주소 입력" class="required" onclick="postcode(&quot;inputAddressLayer&quot;, this);"></div>
+                                <div>
+                                            <div class="ui-select"><a href="#" role="button" id="select-choice-a-button" aria-haspopup="true" class="ui-btn ui-icon-carat-d ui-btn-icon-right ui-corner-all ui-shadow"><span>신고유형</span></a><select name="select-choice-a" id="select-choice-a" data-native-menu="false" tabindex="-1">
+                                                    <option data-placeholder="true">신고유형</option>
+                                                <option value="민원">민원</option>
+                                                       <option value="자체점검">자체점검</option>
+                                                      <option value="기타">기타</option>
+                                               </select><div style="display: none;" id="select-choice-a-listbox-placeholder"><!-- placeholder for select-choice-a-listbox --></div></div>
+                                       </div>
+                                       <div>
+                                            <div class="ui-select"><a href="#" role="button" id="select-choice-b-button" aria-haspopup="true" class="ui-btn ui-icon-carat-d ui-btn-icon-right ui-corner-all ui-shadow"><span>파손유형</span></a><select name="select-choice-b" id="select-choice-b" data-native-menu="false" tabindex="-1">
+                                                <option data-placeholder="true">파손유형</option>
+                                                       <option value="포트홀">포트홀</option>
+                                                       <option value="침하">침하</option>
+                                                       <option value="요철">요철</option>
+                                                      <option value="기타">기타</option>
+                                               </select><div style="display: none;" id="select-choice-b-listbox-placeholder"><!-- placeholder for select-choice-b-listbox --></div></div>
+                                       </div>
+                                    <div>
+                                        <div class="ui-select"><a href="#" role="button" id="select-choice-c-button" aria-haspopup="true" class="ui-btn ui-icon-carat-d ui-btn-icon-right ui-corner-all ui-shadow"><span>차로</span></a><select name="select-choice-c" id="select-choice-c" data-native-menu="false" tabindex="-1">
+                                                       <option data-placeholder="true">차로</option>
+                                                       <option value="1차로">1차로</option>
+                                                       <option value="2차로">2차로</option>
+                                                       <option value="3차로">3차로</option>
+                                                    <option value="4차로">4차로</option>
+                                                <option value="5차로">5차로</option>
+                                                     <option value="6차로">6차로</option>
+                                                       <option value="7차로">7차로</option>
+                                                       <option value="8차로">8차로</option>
+                                                       <option value="9차로">9차로</option>
+                                                       <option value="10차로">10차로</option>
+                                                </select><div style="display: none;" id="select-choice-c-listbox-placeholder"><!-- placeholder for select-choice-c-listbox --></div></div>
+                                    </div>
+
+                <div style="width: 100%; height: 50px;">
+                                              <div style="width: 49%; float: left;">
+                                                       <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset"><input id="scale_width" type="number" placeholder="너비(m)"></div>
+                                               </div>
+                                               <div class="center" style="width: 2%; float: left;">
+                                                    <p>x</p>
+                                               </div>
+                                               <div style="width: 49%; float: right;">
+                                                       <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset"><input id="scale_height" type="number" placeholder="높이(m)"></div>
+                                               </div>
+                                       </div>
+                                           <div>
+                                                <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset"><input id="etc" type="text" placeholder="특이사항"></div>
+                                           </div>
+                                           <div>
+                                                   <div class="ui-btn ui-input-btn ui-corner-all ui-shadow">등록<input type="button" value="등록" onclick="restComplaint(&quot;POST&quot;, complaintUrl(0), makePostJson()); "></div>
+                                           </div>
+                                   </form>
+                        </div>
+
+                <div data-role="footer" role="contentinfo" class="ui-footer ui-bar-inherit">
+                        <div class="footer">
+                                <div class="ft-rem-06 pd-rem-05 center">
+                                        <span class="ft-white">대구광역시 남구 대명로 29<br>TEL 1577-6556 / FAX (053)603-1040</span>
+                                </div>
+                        </div>
+                </div>
+    <div class="ui-screen-hidden ui-popup-screen ui-overlay-inherit" id="select-choice-a-listbox-screen"></div><div class="ui-popup-container ui-popup-hidden ui-popup-truncate" id="select-choice-a-listbox-popup"><div id="select-choice-a-listbox" class="ui-selectmenu ui-popup ui-body-inherit ui-overlay-shadow ui-corner-all"><div class="ui-header ui-bar-inherit"><h1 class="ui-title">신고유형</h1></div><ul class="ui-selectmenu-list ui-listview" id="select-choice-a-menu" role="listbox" aria-labelledby="select-choice-a-button"><li data-option-index="0" data-icon="false" data-placeholder="true" class="ui-screen-hidden" role="option" aria-selected="false"><a href="#" tabindex="-1" class="ui-btn">신고유형</a></li><li data-option-index="1" data-icon="false" class="ui-first-child" role="option" aria-selected="false"><a href="#" tabindex="-1" class="ui-btn">민원</a></li><li data-option-index="2" data-icon="false" class="" role="option" aria-selected="false"><a href="#" tabindex="-1" class="ui-btn">자체점검</a></li><li data-option-index="3" data-icon="false" class="ui-last-child" role="option" aria-selected="false"><a href="#" tabindex="-1" class="ui-btn">기타</a></li></ul></div></div><div class="ui-screen-hidden ui-popup-screen ui-overlay-inherit" id="select-choice-b-listbox-screen"></div><div class="ui-popup-container ui-popup-hidden ui-popup-truncate" id="select-choice-b-listbox-popup"><div id="select-choice-b-listbox" class="ui-selectmenu ui-popup ui-body-inherit ui-overlay-shadow ui-corner-all"><div class="ui-header ui-bar-inherit"><h1 class="ui-title">파손유형</h1></div><ul class="ui-selectmenu-list ui-listview" id="select-choice-b-menu" role="listbox" aria-labelledby="select-choice-b-button"><li data-option-index="0" data-icon="false" data-placeholder="true" class="ui-screen-hidden" role="option" aria-selected="false"><a href="#" tabindex="-1" class="ui-btn">파손유형</a></li><li data-option-index="1" data-icon="false" class="ui-first-child" role="option" aria-selected="false"><a href="#" tabindex="-1" class="ui-btn">포트홀</a></li><li data-option-index="2" data-icon="false" class="" role="option" aria-selected="false"><a href="#" tabindex="-1" class="ui-btn">침하</a></li><li data-option-index="3" data-icon="false" class="" role="option" aria-selected="false"><a href="#" tabindex="-1" class="ui-btn">요철</a></li><li data-option-index="4" data-icon="false" class="ui-last-child" role="option" aria-selected="false"><a href="#" tabindex="-1" class="ui-btn">기타</a></li></ul></div></div><div class="ui-screen-hidden ui-popup-screen ui-overlay-inherit" id="select-choice-c-listbox-screen"></div><div class="ui-popup-container ui-popup-hidden ui-popup-truncate" id="select-choice-c-listbox-popup"><div id="select-choice-c-listbox" class="ui-selectmenu ui-popup ui-body-inherit ui-overlay-shadow ui-corner-all"><div class="ui-header ui-bar-inherit"><h1 class="ui-title">차로</h1></div><ul class="ui-selectmenu-list ui-listview" id="select-choice-c-menu" role="listbox" aria-labelledby="select-choice-c-button"><li data-option-index="0" data-icon="false" data-placeholder="true" class="ui-screen-hidden" role="option" aria-selected="false"><a href="#" tabindex="-1" class="ui-btn">차로</a></li><li data-option-index="1" data-icon="false" class="ui-first-child" role="option" aria-selected="false"><a href="#" tabindex="-1" class="ui-btn">1차로</a></li><li data-option-index="2" data-icon="false" class="" role="option" aria-selected="false"><a href="#" tabindex="-1" class="ui-btn">2차로</a></li><li data-option-index="3" data-icon="false" class="" role="option" aria-selected="false"><a href="#" tabindex="-1" class="ui-btn">3차로</a></li><li data-option-index="4" data-icon="false" class="" role="option" aria-selected="false"><a href="#" tabindex="-1" class="ui-btn">4차로</a></li><li data-option-index="5" data-icon="false" class="" role="option" aria-selected="false"><a href="#" tabindex="-1" class="ui-btn">5차로</a></li><li data-option-index="6" data-icon="false" class="" role="option" aria-selected="false"><a href="#" tabindex="-1" class="ui-btn">6차로</a></li><li data-option-index="7" data-icon="false" class="" role="option" aria-selected="false"><a href="#" tabindex="-1" class="ui-btn">7차로</a></li><li data-option-index="8" data-icon="false" class="" role="option" aria-selected="false"><a href="#" tabindex="-1" class="ui-btn">8차로</a></li><li data-option-index="9" data-icon="false" class="" role="option" aria-selected="false"><a href="#" tabindex="-1" class="ui-btn">9차로</a></li><li data-option-index="10" data-icon="false" class="ui-last-child" role="option" aria-selected="false"><a href="#" tabindex="-1" class="ui-btn">10차로</a></li></ul></div></div></div>
+
+
+    <!-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+  
+    <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+
+<script>
+var setMapInstance = function (map_id, lat, lng) {
+	var container = document.getElementById(map_id);
+	var option = {
+		center: new kakao.maps.LatLng(lat, lng)
+		, level:8
+	}
+
+	return {
+		"container": container
+		, "option": option
+	}
+}
+
+var registerComplaintMap;
+var registerPavageMap;
+
+var setMap = function(container, option) {
+	var map = new kakao.maps.Map(container, option);
+	return map;
+}
+
+
+
+/*var _kmapInstance = null;
+
+var getKMapInstance = function()
+{
+	return _kmapInstance;
+}
+
+var setKMapInstance = function(container, option)
+{	
+	_kmapInstance = new kakao.maps.Map(container, option);
+}
+*/
+
+var _markerPosition  = new kakao.maps.LatLng(35.87, 128.56);
+
+var registerComplaintMarker = new kakao.maps.Marker({
+	position: _markerPosition
+});
+
+var registerPavageMarker = new kakao.maps.Marker({
+        position: _markerPosition
+});
+
+
+
+
+// 주소-좌표 변환 객체를 생성합니다
+var geocoder = new kakao.maps.services.Geocoder();
+
+function searchDetailAddrFromCoords(coords, callback) {
+	// 좌표로 법정동 상세 주소 정보를 요청합니다
+	geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
+}
+
+// 지도를 클릭했을때 클릭한 위치에 마커를 추가하도록 지도에 클릭이벤트를 등록합니다
+var onClickLocationInMap = function (kmapInstance, marker, inputId)
+{
+		kakao.maps.event.addListener(kmapInstance, 'click', function(mouseEvent) {
+			searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
+				if(status === kakao.maps.services.Status.OK) {
+					//var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
+					//detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
+
+					//var content = '<div class="bAddr">' +	'<span class="title"></span>' + detailAddr + '</div>';
+					var addr = result[0].address.address_name;
+					console.log(result);
+					_markerPosition = mouseEvent.latLng;
+					marker.setPosition(_markerPosition);
+					document.getElementById(inputId).value = addr;
+					//addMarker(kmapInstance, mouseEvent.latLng);
+				}
+			});
+		});
+
+}
+
+
+// 지도에 표시된 마커 객체를 가지고 있을 배열입니다
+var markers = [];
+
+var getMarkers = function() {
+	return markers;
+}
+
+// 마커를 생성하고 지도위에 표시하는 함수입니다
+var addMarker = function (kmapInstance, position) {
+
+	// 마커를 생성합니다
+	var marker = new kakao.maps.Marker({
+		position: position
+	}); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
+
+	// 마커가 지도 위에 표시되도록 설정합니다
+	//marker.setMap(kmapInstance);
+
+	// 생성된 마커를 배열에 추가합니다
+	markers.push(marker);
+}
+
+// 배열에 추가된 마커들을 지도에 표시하거나 삭제하는 함수입니다
+var setMarkers = function(kmapInstance) {
+	for (var i = 0; i < markers.length; i++) {
+		markers[i].setMap(kmapInstance);
+	}
+}
+/*
+var postcode = function(inputText) { 
+	new daum.Postcode({
+		oncomplete: function(data) { // 각 주소의 노출 규칙에 따라 주소를 조합한다. // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다. 
+			var fullAddr = data.address; // 최종 주소 변수 
+			var extraAddr = ''; // 조합형 주소 변수 // 기본 주소가 도로명 타입일때 조합한다. 
+			if(data.addressType === 'R'){ //법정동명이 있을 경우 추가한다. 
+				if(data.bname !== ''){ 
+					extraAddr += data.bname; 
+				} // 건물명이 있을 경우 추가한다. 
+				if(data.buildingName !== ''){ 
+					extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName); 
+				} // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다. 
+				fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : ''); 
+			} // 주소 정보를 해당 필드에 넣는다. 
+	//document.getElementById("input_address").value = fullAddr; // 주소로 상세 정보를 검색
+				inputText.value = fullAddr;
+				geocoder.addressSearch(data.address, function(results, status) { // 정상적으로 검색이 완료됐으면 
+				if (status === daum.maps.services.Status.OK) { 
+					var result = results[0]; //첫번째 결과의 값을 활용 // 해당 주소에 대한 좌표를 받아서 
+					var coords = new kakao.maps.LatLng(result.y, result.x); // 지도를 보여준다. 
+					//mapContainer.style.display = "block"; map.relayout(); // 지도 중심을 변경한다. 
+					//map.setCenter(coords); // 마커를 결과값으로 받은 위치로 옮긴다. 
+					_marker.setPosition(coords) 
+				} 
+			}); 
+		} 
+	}).open(); 
+}
+*/
+
+					var postcode = function (layerId, target) {
+
+						var element_layer = document.getElementById(layerId);
+						new daum.Postcode({
+							oncomplete: function(data) {
+								// 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+								// 각 주소의 노출 규칙에 따라 주소를 조합한다.
+								// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+								var addr = ''; // 주소 변수
+								var extraAddr = ''; // 참고항목 변수
+
+								//사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+								if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+									addr = data.roadAddress;
+								} else { // 사용자가 지번 주소를 선택했을 경우(J)
+									addr = data.jibunAddress;
+								}
+
+								// 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+								if(data.userSelectedType === 'R'){
+									// 법정동명이 있을 경우 추가한다. (법정리는 제외)
+									// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+									if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){	extraAddr += data.bname;	}
+									// 건물명이 있고, 공동주택일 경우 추가한다.
+									if(data.buildingName !== '' && data.apartment === 'Y'){		extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);		}
+									// 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+									if(extraAddr !== ''){						extraAddr = ' (' + extraAddr + ')';	}
+									// 조합된 참고항목을 해당 필드에 넣는다.
+									// document.getElementById("sample2_extraAddress").value = extraAddr;
+								}	
+								else {	;
+									//document.getElementById("sample2_extraAddress").value = '';
+								}
+
+								// 우편번호와 주소 정보를 해당 필드에 넣는다.
+								//document.getElementById('sample2_postcode').value = data.zonecode;
+								//document.getElementById("sample2_address").value = addr;
+								// 커서를 상세주소 필드로 이동한다.
+								//document.getElementById("sample2_detailAddress").focus();
+
+								target.focus();
+								var addrStr = addr + extraAddr;
+								target.value = addrStr;
+
+								// iframe을 넣은 element를 안보이게 한다.
+								// (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
+								element_layer.style.display = 'none';
+
+								geocoder.addressSearch(data.address, function(results, status) { // 정상적으로 검색>이 완료됐으면
+									if (status === daum.maps.services.Status.OK) {
+										var result = results[0]; //첫번째 결과의 값을 활용 // 해당 주소에 대한 좌표>를 받아서
+										var coords = new kakao.maps.LatLng(result.y, result.x); // 지도를 보여준다.
+										//mapContainer.style.display = "block"; map.relayout(); // 지도 중심을 변경>한다.
+										//map.setCenter(coords); // 마커를 결과값으로 받은 위치로 옮긴다.
+										registerComplaintMap.setCenter(coords);
+										_markerPosition = coords;
+										registerComplaintMarker.setPosition(_markerPosition);
+									}
+								});
+							},
+							width : '100%',
+							height : '100%',
+							maxSuggestItems : 5
+						}).embed(element_layer);
+						// iframe을 넣은 element를 보이게 한다.
+						element_layer.style.display = 'block';
+
+						// iframe을 넣은 element의 위치를 화면의 가운데로 이동시킨다.
+						//initLayerPosition();
+
+						// 브라우저의 크기 변경에 따라 레이어를 가운데로 이동시키고자 하실때에는
+						// resize이벤트나, orientationchange이벤트를 이용하여 값이 변경될때마다 아래 함수를 실행 시켜 주시거나,
+						// 직접 element_layer의 top,left값을 수정해 주시면 됩니다.
+						var width = 90; //우편번호서비스가 들어갈 element의 width
+						var height = 50; //우편번호서비스가 들어갈 element의 height
+						var borderWidth = 5; //샘플에서 사용하는 border의 두께
+
+						// 위에서 선언한 값들을 실제 element에 넣는다.
+						element_layer.style.width = width + '%';
+						element_layer.style.height = height + '%';
+						element_layer.style.border = borderWidth + 'px solid';
+						// 실행되는 순간의 화면 너비와 높이 값을 가져와서 중앙에 뜰 수 있도록 위치를 계산한다.
+						//element_layer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width)/2 - borderWidth) + 'px';
+						//element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 'px';
+						element_layer.style.left = '4vw';
+						element_layer.style.top = '10vh';
+
+					}
+
+
+
+// 마커 클러스터러를 생성합니
+var initClusterer = function(map) {
+	var clusterer = new kakao.maps.MarkerClusterer({
+		map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
+		averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
+		minLevel: 8, // 클러스터 할 최소 지도 레벨 
+		calculator: [2, 4, 6], // 클러스터의 크기 구분 값, 각 사이값마다 설정된 text나 style이 적용된다
+		texts: getTexts, // texts는 ['삐약', '꼬꼬', '꼬끼오', '치멘'] 이렇게 배열로도 설정할 수 있다 
+		styles: [{ // calculator 각 사이 값 마다 적용될 스타일을 지정한다
+			width : '30px', height : '30px',
+			background: 'rgba(51, 204, 255, .8)',
+			borderRadius: '15px',
+			color: '#000',
+			textAlign: 'center',
+			fontWeight: 'bold',
+			lineHeight: '31px'
+		},
+			{
+				width : '40px', height : '40px',
+				background: 'rgba(255, 153, 0, .8)',
+				borderRadius: '20px',
+				color: '#000',
+				textAlign: 'center',
+				fontWeight: 'bold',
+				lineHeight: '41px'
+			},
+			{
+				width : '50px', height : '50px',
+				background: 'rgba(255, 51, 204, .8)',
+				borderRadius: '25px',
+				color: '#000',
+				textAlign: 'center',
+				fontWeight: 'bold',
+				lineHeight: '51px'
+			},
+			{
+				width : '60px', height : '60px',
+				background: 'rgba(255, 80, 80, .8)',
+				borderRadius: '30px',
+				color: '#000',
+				textAlign: 'center',
+				fontWeight: 'bold',
+				lineHeight: '61px'
+			}
+		]
+	});
+
+	return clusterer;
+}
+
+
+// 클러스터 내부에 삽입할 문자열 생성 함수입니다 
+function getTexts( count ) {
+
+	return count;
+	// 한 클러스터 객체가 포함하는 마커의 개수에 따라 다른 텍스트 값을 표시합니다 
+	/*
+	if(count < 2) {
+		return '삐약';        
+	} else if(count < 4) {
+		return '꼬꼬';
+	} else if(count < 6) {
+		return '꼬끼오';
+	} else {
+		return '치멘';
+	}
+	*/
+}
+
+</script>
+
+    <script src="./grt-responsive-menu/grt-responsive-menu.js"></script>
+
+    <script src=".,/kakao_map.js"></script>
+    <script src="./js/dynamo.js"></script>
+    <script src="./js/function.js"></script>
+
+
+
+
+
+</div><div class="ui-loader ui-corner-all ui-body-a ui-loader-default"><span class="ui-icon-loading"></span><h1>loading</h1></div></body></html>
